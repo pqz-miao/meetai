@@ -25,7 +25,7 @@ import { authClient } from "@/lib/auth-client";
 
 const formSchema = z.object({
     name: z.string().min(1, { message: "Name is required" }),
-    email: z.string().nonempty({ message: "Email is required" }).email(),
+    email: z.string().min(1, { message: "Email is required" }).email(),
     password: z.string().min(1, { message: "Password is required" }),
     confirmPassword: z.string().min(1, { message: "Password is required" }),
 })
