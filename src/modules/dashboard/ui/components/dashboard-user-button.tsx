@@ -59,6 +59,7 @@ export const DashboardUserButton = () => {
                         <span className="text-sm font-normal text-muted-foreground truncate">{data.user.email}</span>
                     </div>
                 </DropdownMenuLabel>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem 
                     className="cursor-pointer flex items-center justify-between"
                 >
