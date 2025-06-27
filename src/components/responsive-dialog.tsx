@@ -38,10 +38,10 @@ export const ResponsiveDialog = ({
         return (
             <Drawer open={open} onOpenChange={onOpenChange}>
                 <DrawerContent>
-                    <DialogHeader>
-                        <DialogTitle>{title}</DialogTitle>
-                        <DialogDescription>{description}</DialogDescription>
-                    </DialogHeader>
+                    <DrawerHeader>
+                        <DrawerTitle>{title}</DrawerTitle>
+                        <DrawerDescription>{description}</DrawerDescription>
+                    </DrawerHeader>
                     <div className="p-4">
                         {children}
                     </div>
