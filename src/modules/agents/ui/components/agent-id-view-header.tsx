@@ -58,7 +58,7 @@ export const AgentIdViewHeader = ({
                 </BreadcrumbList>
             </Breadcrumb>
             {/* Without modal={false}, the dialog that this dropdown opens cause the website to get unclickable */}
-            <DropdownMenu modal={true}>
+            <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost">
                         <MoreVerticalIcon />
