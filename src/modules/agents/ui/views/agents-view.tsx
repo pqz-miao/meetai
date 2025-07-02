@@ -11,7 +11,7 @@ import { LoadingState } from "@/components/loading-state";
 import { useTRPC } from "@/trpc/client";
 
 import { columns } from "../components/columns";
-import { DataPagination } from "../components/data-pagination";
+import { DataPagination } from "@/components/data-pagination";
 import { useAgentsFilters } from "../../hooks/use-agents-filters";
 
 export const AgentsView = () => {

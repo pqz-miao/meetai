@@ -12,6 +12,7 @@ import {
     MIN_PAGE_SIZE 
 } from "@/constants";
 
+import { MeetingStatus } from "../types";
 import { meetingsInsertSchema, meetingsUpdateSchema } from "../schemas";
 
 export const MeetingsRouter = createTRPCRouter({
@@ -25,10 +26,20 @@ export const MeetingsRouter = createTRPCRouter({
                     .max(MAX_PAGE_SIZE)
                     .default(DEFAULT_PAGE_SIZE),
                 search: z.string().nullish(),
+                agentId: z.string().nullish(),
+                status: z
+                    .enum([
+                        MeetingStatus.Upcoming,
+                        MeetingStatus.Active,
+                        MeetingStatus.Completed,
+                        MeetingStatus.Cancelled,
+                        MeetingStatus.Processing,
+                    ])
+                    .nullish(),
             })
         )
         .query(async ({ ctx, input }) => {
-            const { page, pageSize, search } = input;
+            const { page, pageSize, search, status, agentId } = input;
 
             const data = await db
                 .select({
@@ -42,7 +53,9 @@ export const MeetingsRouter = createTRPCRouter({
                     and(
                         eq(meetings.userId, ctx.auth.user.id),
                         search ? ilike(meetings.name, `%${search}%`) : undefined,
-                    )
+                        status ? eq(meetings.status, status): undefined,
+                        agentId ? eq(meetings.agentId, agentId) : undefined,
+                    ),
                 )
                 .orderBy(desc(meetings.createdAt), desc(meetings.id))
                 .limit(pageSize)
@@ -56,7 +69,9 @@ export const MeetingsRouter = createTRPCRouter({
                     and(
                         eq(meetings.userId, ctx.auth.user.id),
                         search ? ilike(meetings.name, `%${search}%`) : undefined,
-                    )
+                        status ? eq(meetings.status, status) : undefined,
+                        agentId ? eq(meetings.agentId, agentId) : undefined,
+                    ),
                 );
 
             const totalPages = Math.ceil(total.count / pageSize);
