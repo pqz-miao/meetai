@@ -4,6 +4,7 @@ import { botttsNeutral, initials } from "@dicebear/collection";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { cn } from "@/lib/utils";
+import { generateAvatarUri } from "@/lib/avatar";
 
 interface Props {
     seed: string;
@@ -16,23 +17,11 @@ export const GeneratedAvatar = ({
     className,
     variant
 }: Props) => {
-    let avatar;
-
-    if (variant === "botttsNeutral") {
-        avatar = createAvatar(botttsNeutral, {
-            seed,
-        });
-    } else {
-        avatar = createAvatar(initials, {
-            seed,
-            fontWeight: 500,
-            fontSize: 42,
-        });
-    }
+    const avatar = generateAvatarUri({ seed, variant });
 
     return (
         <Avatar className={cn(className)}>
-            <AvatarImage src={avatar.toDataUri()} alt="Avatar" />
+            <AvatarImage src={avatar} alt="Avatar" />
             <AvatarFallback>{seed.charAt(0).toUpperCase()}</AvatarFallback>
         </Avatar>
     );
